@@ -1,10 +1,12 @@
-<!-- app/views/user/show.blade.php -->
 @extends('layouts.master')
 
-@section('content')
-<div class="panel panel-default">
-    <div class="panel-heading"><label>View User</label>
-        <a class ='pull-right' href="{{ Request::header('referer') }}">
-            <i class="glyphicon glyphicon-circle-arrow-left"></i> Go Back
-        </a>
-    </div>
+@section('nav-left-links')
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url('about/') }}">About</a>
+</li>
+@endsection
+
+@section('nav-right-links')
+    <a href="myregister/" class="btn btn-outline-success ms-2">Register</a>
+    <a href="mylogin/" class="btn btn-outline-success ms-2">Login</a>
+@endsection
