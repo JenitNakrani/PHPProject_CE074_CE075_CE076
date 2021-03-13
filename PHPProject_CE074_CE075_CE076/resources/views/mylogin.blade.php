@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('nav-right-links')
-    <a href="{{ url('myregister/') }}" class="btn btn-outline-success ms-2">Register</a>
+    <a href="{{ url('myregister') }}" class="btn btn-outline-success ms-2">Register</a>
 @endsection
 
 @section('content')
