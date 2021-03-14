@@ -27,5 +27,7 @@ Route::get('/', function () {
 
 Route::view('myregister', 'myregister');
 Route::POST('register', [UserController::class,'addMember']);
-Route::view('/mylogin', 'mylogin');
+Route::view('mylogin', 'mylogin');
+Route::POST('userlogin', [UserController::class,'loginMember']);
+Route::view('temp', 'temp');
 Route::view('about/', 'about');

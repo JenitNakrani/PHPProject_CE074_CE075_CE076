@@ -4,7 +4,11 @@
     <a href="{{ url('mylogin') }}" class="btn btn-outline-success ms-2">Login</a>
 @endsection
 
+
 @section('content')
+@if(session('message'))
+    <div class="alert alert-danger">{{session('message')}}</div>
+@endif
     <form class="mt-5" action="{{ url('register') }}" method="POST" style="width: 300px;">
     @csrf
     <div class="mb-3">
