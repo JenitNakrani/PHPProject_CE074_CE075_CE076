@@ -15,19 +15,27 @@ class UserController extends Controller
         $uname = $req->username;
         $upassword =  $req->password;
         $urepassword =  $req->repassword;
+        $uemail=$req->email;
         if($upassword == $urepassword)
         {
             $c = DB::table('readers')->where('username',$uname)->count();
+            $ec = DB::table('readers')->select('username')->where('email',$uemail)->count();
             if($c == 0 )
             {
-                $reader = new Reader;
-                $reader->username = $req->username;
-                $reader->firstname = $req->firstname;
-                $reader->lastname = $req->lastname;
-                $reader->email = $req->email;
-                $reader->password = $req->password;
-                $reader->save();
-                return redirect('mylogin');
+                if($ec==0)
+                {
+                    $reader = new Reader;
+                    $reader->username = $req->username;
+                    $reader->firstname = $req->firstname;
+                    $reader->lastname = $req->lastname;
+                    $reader->email = $req->email;
+                    $reader->password = bcrypt('password');
+                    $reader->save();
+                    return redirect('mylogin');
+                }
+                else{
+                    return redirect('myregister')->with('message',"Email alredy exists");    
+                }
             }
             else{
                 return redirect('myregister')->with('message',"username alredy exists");
