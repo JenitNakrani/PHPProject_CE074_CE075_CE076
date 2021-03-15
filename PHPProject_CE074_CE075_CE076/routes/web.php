@@ -27,11 +27,16 @@ Route::get('/', function () {
 
 Route::view('myregister', 'myregister');
 Route::POST('register', [UserController::class,'addMember']);
+
 Route::view('mylogin', 'mylogin');
 Route::POST('userlogin', [UserController::class,'loginMember']);
 Route::view('login_welcome', 'login_welcome');
+
 Route::view('about/', 'about');
 Route::get('/logout',[UserController::class,'logoutMember']);
 
 Route::view('addbook','addbook');
 Route::POST('addbook',[UserController::class,'addBook']);
+
+Route::GET('removebook',[UserController::class,'removeBook']);
+Route::POST('removebook',[UserController::class,'removeBook']);

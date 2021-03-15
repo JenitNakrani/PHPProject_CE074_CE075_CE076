@@ -104,4 +104,19 @@ class UserController extends Controller
         $book->save();
         return redirect('addbook')->with('message',"Successfully Book added.");
     }
+
+    function removeBook(Request $req) {
+        if($req->isMethod('POST')) {
+            $book_id = $req->id;
+            // $book_object = DB::table('books')->where('id',$book_id);
+            // $book_object->delete();
+            DB::delete("delete from books where id = $book_id");
+            $books = DB::table('books')->get();
+            return view('removebook', ['books' => $books]);
+        } else {
+            $books = DB::table('books')->get();
+            return view('removebook', ['books' => $books]);
+        }
+    }
+
 }
