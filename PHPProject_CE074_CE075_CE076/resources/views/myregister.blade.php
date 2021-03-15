@@ -4,6 +4,7 @@
     <a href="{{ url('mylogin') }}" class="btn btn-outline-success ms-2">Login</a>
 @endsection
 
+<title>Register</title>
 
 @section('content')
 @if(session('message'))

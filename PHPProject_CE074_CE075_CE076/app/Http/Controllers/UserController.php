@@ -42,7 +42,10 @@ class UserController extends Controller
     {
         $uname = $req->username;
         $upassword =  $req->password;
-        $c = DB::table('readers')->where('username',$uname and 'password',$upassword)->count();
+        $c = DB::table('readers')->select('username')->where('username',$uname)->where('password',$upassword)->count();
+        // echo $c;
+        // echo $uname;
+        // echo $upassword;
         if($c == 1)
         {
             return redirect('temp');
