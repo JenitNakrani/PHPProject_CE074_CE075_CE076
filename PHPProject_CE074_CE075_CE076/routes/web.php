@@ -32,3 +32,6 @@ Route::POST('userlogin', [UserController::class,'loginMember']);
 Route::view('login_welcome', 'login_welcome');
 Route::view('about/', 'about');
 Route::get('/logout',[UserController::class,'logoutMember']);
+
+Route::view('addbook','addbook');
+Route::POST('addbook',[UserController::class,'addBook']);

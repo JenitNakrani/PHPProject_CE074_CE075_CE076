@@ -2,7 +2,7 @@
 
 @section('nav-right-links')
 @if(session()->has('superuser'))
-    <a href="" class="btn btn-outline-success ms-2">Add book</a>
+    <a href="{{ url('addbook') }}" class="btn btn-outline-success ms-2">Add book</a>
     <a href="" class="btn btn-outline-success ms-2">Remove book</a>
 @else
     <a href="" class="btn btn-outline-success ms-2">Issue book</a>  

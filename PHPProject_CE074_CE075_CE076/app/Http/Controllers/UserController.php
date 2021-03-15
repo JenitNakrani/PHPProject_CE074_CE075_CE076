@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\user;
+use App\Models\User;
+use App\Models\Book;
 use Auth;
 use Hash;
 use Crypt;
@@ -81,10 +82,26 @@ class UserController extends Controller
                 return redirect('mylogin')->with('message',"Invalid Username or Password of Superuser");
         }
     }
+
     function logoutMember(Request $req)
     {
         session()->forget('superuser');
         session()->flush();
         return redirect('/')->with('message',"Successfully Logout..");
+    }
+
+    function addBook(Request $req) {
+        $book_name = $req->book_name;
+        $author =  $req->author_name;
+        $publish_year=$req->publish_year;
+        
+        $book = new book;
+
+        $book->book_name = $book_name;
+        $book->author_name = $author;
+        $book->publish_year = $publish_year;
+        $book->is_available = TRUE;
+        $book->save();
+        return redirect('addbook')->with('message',"Successfully Book added.");
     }
 }
