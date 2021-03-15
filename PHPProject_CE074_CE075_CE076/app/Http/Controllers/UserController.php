@@ -55,18 +55,36 @@ class UserController extends Controller
     {
         $uname = $req->name;
         $upassword =  $req->password;
-        $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
-        if ($c == 1){
-            $req->session()->put('uname',$uname);
-            return redirect('login_welcome');
-        }
-        else
+        $checkbox=$req->checkbox;
+        $super_name="admin";
+        $super_pass="admin";
+        error_log($checkbox);
+        if($checkbox != "superuser")
         {
-            return redirect('mylogin')->with('message',"invalid username or password");
+            $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
+            if ($c == 1){
+                $req->session()->put('uname',$uname);
+                return redirect('login_welcome');
+            }
+            else
+            {
+                return redirect('mylogin')->with('message',"invalid username or password");
+            }
+        }
+        else{
+            if ($uname == $super_name and $upassword == $super_pass)
+            {  
+                 $req->session()->put('superuser',TRUE);
+                return redirect('login_welcome')->with('message',"invalid username or password");
+            }
+                else
+                return redirect('mylogin')->with('message',"Invalid Username or Password of Superuser");
         }
     }
     function logoutMember(Request $req)
     {
+        session()->forget('superuser');
+        session()->flush();
         return redirect('/')->with('message',"Successfully Logout..");
     }
 }
