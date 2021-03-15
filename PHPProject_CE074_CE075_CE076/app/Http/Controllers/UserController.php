@@ -5,32 +5,37 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Reader;
+use App\Models\user;
+use Auth;
+use Hash;
+use Crypt;
+use Session;
+use Illuminate\Database\Query\Builder;
 
 class UserController extends Controller
 {
     
     function addMember(Request $req)
-    {
+     {
         $uname = $req->username;
         $upassword =  $req->password;
         $urepassword =  $req->repassword;
         $uemail=$req->email;
         if($upassword == $urepassword)
         {
-            $c = DB::table('readers')->where('username',$uname)->count();
-            $ec = DB::table('readers')->select('username')->where('email',$uemail)->count();
+            $c = DB::table('users')->where('name',$uname)->count();
+            $ec = DB::table('users')->select('name')->where('email',$uemail)->count();
             if($c == 0 )
             {
                 if($ec==0)
                 {
-                    $reader = new Reader;
-                    $reader->username = $req->username;
-                    $reader->firstname = $req->firstname;
-                    $reader->lastname = $req->lastname;
-                    $reader->email = $req->email;
-                    $reader->password = bcrypt('password');
-                    $reader->save();
+                    $user = new user;
+                    $user->name = $req->name;
+                    $user->firstname = $req->firstname;
+                    $user->lastname = $req->lastname;
+                    $user->email = $req->email;
+                    $user->password = $req->password;
+                    $user->save();
                     return redirect('mylogin');
                 }
                 else{
@@ -48,11 +53,11 @@ class UserController extends Controller
 
     function loginMember(Request $req)
     {
-        $uname = $req->username;
+        $uname = $req->name;
         $upassword =  $req->password;
-        $c = DB::table('readers')->select('username')->where('username',$uname)->where('password',$upassword)->count();
-        if($c == 1)
-        {
+        $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
+        if ($c == 1){
+            $req->session()->put('uname',$uname);
             return redirect('login_welcome');
         }
         else
