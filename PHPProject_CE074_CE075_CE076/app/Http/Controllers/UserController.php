@@ -51,16 +51,17 @@ class UserController extends Controller
         $uname = $req->username;
         $upassword =  $req->password;
         $c = DB::table('readers')->select('username')->where('username',$uname)->where('password',$upassword)->count();
-        // echo $c;
-        // echo $uname;
-        // echo $upassword;
         if($c == 1)
         {
-            return redirect('temp');
+            return redirect('login_welcome');
         }
         else
         {
             return redirect('mylogin')->with('message',"invalid username or password");
         }
+    }
+    function logoutMember(Request $req)
+    {
+        return redirect('/')->with('message',"Successfully Logout..");
     }
 }

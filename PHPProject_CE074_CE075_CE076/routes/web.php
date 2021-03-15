@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('welcome/', function () {
+Route::get('laravel/', function () {
     return view('welcome');
 });
 
@@ -29,5 +29,6 @@ Route::view('myregister', 'myregister');
 Route::POST('register', [UserController::class,'addMember']);
 Route::view('mylogin', 'mylogin');
 Route::POST('userlogin', [UserController::class,'loginMember']);
-Route::view('temp', 'temp');
+Route::view('login_welcome', 'login_welcome');
 Route::view('about/', 'about');
+Route::get('/logout',[UserController::class,'logoutMember']);
