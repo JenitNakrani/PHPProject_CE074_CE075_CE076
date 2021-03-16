@@ -116,8 +116,10 @@ class BookController extends Controller
                 $books=Book::where('book_name', 'LIKE', "%{$search_query}%")-> get();
             elseif($option == "author_name") 
                 $books=Book::where('author_name', 'LIKE', "%{$search_query}%")->get();
-            else
+            elseif($option == "publish_year")
                 $books=Book::where('publish_year','LIKE',"%{$search_query}%") -> get();
+            else
+                $books = DB::select("SELECT * from books where is_available>0");
             return view('issuebook', ['books' => $books]);
         }
     }
