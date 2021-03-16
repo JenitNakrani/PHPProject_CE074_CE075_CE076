@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-<title>Register</title>
+<title>Remove book</title>
 
 @section('nav-right-links')
 @if(session()->has('superuser'))
@@ -12,7 +12,7 @@
 
 @section('content')
 @if(session('message'))
-    <div class="alert alert-success">{{session('message')}}</div>
+    <div class="alert alert-danger">{{session('message')}}</div>
 @endif
 
 <div class="container">

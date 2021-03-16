@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-<title>Register</title>
+<title>Issue book</title>
 
 @section('nav-right-links')
         <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>      

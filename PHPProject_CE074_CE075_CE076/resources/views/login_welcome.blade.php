@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+<title>Welcome</title>
+
 @section('nav-right-links')
 @if(session()->has('superuser'))
     <a href="{{ url('addbook') }}" class="btn btn-outline-success ms-2">Add book</a>

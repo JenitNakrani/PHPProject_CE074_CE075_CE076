@@ -48,16 +48,16 @@ class BookController extends Controller
             $book_id = $req->id;
             $c = DB::table('books')->where('id',$book_id)->value('stock');
             $avail = DB::table('books')->where('id',$book_id)->value('is_available');
-            if($c == 1 && $avail == 1)
+            if($c == 1 and $avail == 1)
             {
                 DB::delete("delete from books where id = $book_id");
             }
-            elseif($c==1 && $avail ==0)
+            elseif($c==1 and $avail ==0)
             {
-                return redirect('removeBook')->with('message',"You can not delete this Book Because this book is already given.");
+                return redirect('removebook')->with('message',"You can't delete this Book Because this book is already given.");
             }
             elseif($avail==0)
-                return redirect('removeBook')->with('message',"You can not delete this Book Because this book is already given.");
+                return redirect('removebook')->with('message',"You can't delete this Book Because this book is already given.");
             else{
                 DB::table('books')->where('id',$book_id)->decrement('stock');
                 DB::table('books')->where('id',$book_id)->decrement('is_available');        
@@ -137,8 +137,8 @@ class BookController extends Controller
             {
                 if($avail>0)
                 {
-                    DB::table('books')->where('id',$book_id)->decrement('is_available');
-                    DB::table('books')->where('id',$book_id)->increment('issued_book');
+                    DB::table('books')->where('id',$book_id)->increment('is_available');
+                    DB::table('books')->where('id',$book_id)->decrement('issued_book');
                     $issue_books->book_id=$book_id;
                     $issue_books->user_id=$user_id;
                     $issue_books->save();
