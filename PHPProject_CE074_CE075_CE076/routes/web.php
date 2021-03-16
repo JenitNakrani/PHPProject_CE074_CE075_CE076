@@ -40,3 +40,6 @@ Route::POST('addbook',[UserController::class,'addBook']);
 
 Route::GET('removebook',[UserController::class,'removeBook']);
 Route::POST('removebook',[UserController::class,'removeBook']);
+
+Route::GET('issuebook',[UserController::class,'issueBook']);
+Route::POST('issuebook',[UserController::class,'issueBook']);

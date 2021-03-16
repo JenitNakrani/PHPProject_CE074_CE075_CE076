@@ -3,23 +3,33 @@
 <title>Register</title>
 
 @section('nav-right-links')
-@if(session()->has('superuser'))
-    <a href="{{ url('addbook') }}" class="btn btn-outline-success ms-2">Add book</a>
-    <a href="{{ url('removebook') }}" class="btn btn-outline-success ms-2">Remove book</a>
-    <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>
-    @endif
+        <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>      
 @endsection
+
+
+
+
+
+
+@section('nav-left-links')
+<a href="" class="btn btn-outline-success ms-2">Issue book</a>  
+    <a href="" class="btn btn-outline-success ms-2">Return book</a>
+    
+@endsection
+
+
 
 @section('content')
 @if(session('message'))
     <div class="alert alert-success">{{session('message')}}</div>
 @endif
 
-@foreach( $m as $message)
-  {{$m}}
-  @endforeach
-<div class="container">
-        <form action="{{ url ('removebook') }}" method="GET" novalidate="novalidate">
+<!-- <head>
+ </head>
+<body>
+<section class="search-sec"> -->
+    <div class="container">
+        <form action="{{ url ('issuebook') }}" method="GET" novalidate="novalidate">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
@@ -42,10 +52,14 @@
             </div>
         </form>
     </div>
+<!-- </section>
+  
+  
+</body> -->
 
-    
+
     @if(count($books) > 0)
-    <form action="{{ url ('removebook') }}" method="POST">
+    <form action="{{ url ('issuebook') }}" method="POST">
       @csrf
       <table class="table">
           <thead>
@@ -53,9 +67,9 @@
               <td>Book Name</td>
               <td>Author Name</td>
               <td>Publish Year</td>
-              <td>Book Stock</td>
-              <td>Issued Book</td>
-              <td>Is Available</td>
+              <td>stock</td>
+              <td>available</td>
+              <td>issued</td>
               <td>Action</td>
             </tr>
           </thead>
@@ -66,11 +80,10 @@
                  <td> {{$book->book_name}} </td> 
                  <td> {{$book->author_name}} </td>
                  <td> {{$book->publish_year}}</td>
-                 <td> {{$book->stock}} </td>
-                 <td> {{$book->issued_book}} </td>
-                 <td> {{$book->is_available}} </td>
-                  
-                 <td> <button type="submit" name="id" class="btn btn-outline-danger" value="{{ $book->id }}">Remove</button> </td>
+                 <td> {{$book->stock}}</td>
+                 <td> {{$book->is_available}}</td>
+                 <td> {{$book->issued_book}}</td>
+                 <td> <button type="submit" name="id" class="btn btn-outline-success" value="{{ $book->id }}">Issue</button> </td>
               </tr>
             @endforeach
           </tbody>
@@ -78,11 +91,7 @@
     </form>
     @else
     <div class="container">
-      <h1>No book in library
-      <!-- @if(session()->has('search'))
-        {{session()->get('search')}}
-	    @endif -->
-      </h1>
+      <h1>No Books available In to the Library</h1>
     </div>
     @endif
 

@@ -7,7 +7,6 @@
 @endsection
 
 <title>Home</title>
-
 @section('nav-right-links')
     <a href="myregister/" class="btn btn-outline-success ms-2">Register</a>
     <a href="mylogin/" class="btn btn-outline-success ms-2">Login</a>
@@ -17,4 +16,16 @@
 @if(session('message'))
     <div class="alert alert-success">{{session('message')}}</div>
 @endif
+@endsection
+
+@section('mystyle')
+<style>
+                body{
+                        margin: 0;
+                        padding: 0;
+                        background-image:url('{{ asset('img/2.jpg') }}');
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                }
+</style>
 @endsection
