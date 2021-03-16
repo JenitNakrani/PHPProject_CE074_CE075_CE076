@@ -19,13 +19,13 @@ class UserController extends Controller
     
     function addMember(Request $req)
      {
-        $uname = $req->username;
+        $uname = $req->name;
         $upassword =  $req->password;
         $urepassword =  $req->repassword;
         $uemail=$req->email;
         if($upassword == $urepassword)
         {
-            $c = DB::table('users')->where('name',$uname)->count();
+            $c = DB::table('users')->select('name')->where('name',$uname)->count();
             $ec = DB::table('users')->select('name')->where('email',$uemail)->count();
             if($c == 0 )
             {

@@ -9,4 +9,5 @@ class Book extends Model
 {
     use HasFactory;
     public $timestamps = FALSE;
+    
 }

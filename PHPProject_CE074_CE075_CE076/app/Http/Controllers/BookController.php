@@ -152,9 +152,10 @@ class BookController extends Controller
         else {
             $uname = $req->session()->get('uname');
             $user_id=DB::table('users')->where('name',$uname)->value('id');
-            // $books = DB::table('issue__books')->where('user_id',$user_id)->value('book_id');
-            echo $books;
-            return view('returnbook', ['books' => $books]);
+            $books = DB::table('issue__books')->select('*')->where('user_id',$user_id)->get();
+            // $books = issue_Book::with('book_id')->get();
+            echo $books->book_id;
+            // return view('returnbook', ['books' => $books]);
         }
     }
 }
