@@ -6,22 +6,14 @@
         <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>      
 @endsection
 
-
-
-
-
-
 @section('nav-left-links')
-<a href="" class="btn btn-outline-success ms-2">Issue book</a>  
-    <a href="" class="btn btn-outline-success ms-2">Return book</a>
-    
+  <a href="{{ url('issuebook') }}" class="btn btn-outline-success ms-2">Issue book</a>  
+  <a href="{{ url('returnbook/') }}" class="btn btn-outline-success ms-2">Return book</a>
 @endsection
-
-
 
 @section('content')
 @if(session('message'))
-    <div class="alert alert-success">{{session('message')}}</div>
+    <div class="alert alert-danger">{{session('message')}}</div>
 @endif
 
 <!-- <head>

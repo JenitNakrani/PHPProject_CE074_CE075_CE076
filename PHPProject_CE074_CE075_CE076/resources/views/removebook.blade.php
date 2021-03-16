@@ -15,9 +15,6 @@
     <div class="alert alert-success">{{session('message')}}</div>
 @endif
 
-@foreach( $m as $message)
-  {{$m}}
-  @endforeach
 <div class="container">
         <form action="{{ url ('removebook') }}" method="GET" novalidate="novalidate">
             <div class="row">

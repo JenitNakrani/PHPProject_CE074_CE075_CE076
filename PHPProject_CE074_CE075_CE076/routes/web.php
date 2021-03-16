@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,10 +38,13 @@ Route::view('about/', 'about');
 Route::get('/logout',[UserController::class,'logoutMember']);
 
 Route::view('addbook','addbook');
-Route::POST('addbook',[UserController::class,'addBook']);
+Route::POST('addbook',[BookController::class,'addBook']);
 
-Route::GET('removebook',[UserController::class,'removeBook']);
-Route::POST('removebook',[UserController::class,'removeBook']);
+Route::GET('removebook',[BookController::class,'removeBook']);
+Route::POST('removebook',[BookController::class,'removeBook']);
 
-Route::GET('issuebook',[UserController::class,'issueBook']);
-Route::POST('issuebook',[UserController::class,'issueBook']);
+Route::GET('issuebook',[BookController::class,'issueBook']);
+Route::POST('issuebook',[BookController::class,'issueBook']);
+
+Route::GET('returnbook',[BookController::class,'returnBook']);
+Route::POST('returnbook',[BookController::class,'returnBook']);
