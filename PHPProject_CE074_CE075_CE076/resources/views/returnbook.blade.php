@@ -24,23 +24,19 @@
               <td>Book Name</td>
               <td>Author Name</td>
               <td>Publish Year</td>
-              <td>stock</td>
-              <td>available</td>
-              <td>issued</td>
-              <td>Action</td>
+              <td>issued date</td>
             </tr>
           </thead>
 
           <tbody>
              @foreach($books as $book)
               <tr>
-                 <td> {{$book->book_name}} </td> 
-                 <td> {{$book->author_name}} </td>
-                 <td> {{$book->publish_year}}</td>
-                 <td> {{$book->stock}}</td>
-                 <td> {{$book->is_available}}</td>
-                 <td> {{$book->issued_book}}</td>
-                 <td> <button type="submit" name="id" class="btn btn-outline-danger" value="{{ $book->id }}">Return</button> </td>
+                 <td> {{$book['book']->book_name}} </td> 
+                 <td> {{$book['book']->author_name}} </td>
+                 <td> {{$book['book']->publish_year}}</td>
+                 <td>{{$book['issued_date']}}</td>
+                 <input type="hidden" name="book_id" value="{{$book['book']->id}}"/>
+                 <td> <button type="submit" name="id" class="btn btn-outline-danger" value="{{ $book['id'] }}">Return</button> </td>
               </tr>
             @endforeach
           </tbody>

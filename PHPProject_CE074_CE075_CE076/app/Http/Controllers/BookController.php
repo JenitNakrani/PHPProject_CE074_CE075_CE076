@@ -93,11 +93,12 @@ class BookController extends Controller
             {
                 if($avail>0)
                 {
-                    DB::table('books')->where('id',$book_id)->decrement('is_available');
-                    DB::table('books')->where('id',$book_id)->increment('issued_book');
                     $issue_books->book_id=$book_id;
                     $issue_books->user_id=$user_id;
+                    $issue_books->issued_date=date('Y-m-d');
                     $issue_books->save();
+                    DB::table('books')->where('id',$book_id)->decrement('is_available');
+                    DB::table('books')->where('id',$book_id)->increment('issued_book');
                 }
             }
             else{
@@ -126,38 +127,22 @@ class BookController extends Controller
 
     function returnBook(Request $req) {
         if($req->isMethod('POST')) {
-            $book_id = $req->id;
+            
+            $issue_id = $req->id;
             $uname=$req->session()->get('uname');
-            $issue_books =new issue_book;
-            $c = DB::table('books')->where('id',$book_id)->value('stock');
-            $avail = DB::table('books')->where('id',$book_id)->value('is_available');
-            $user_id=DB::table('users')->where('name',$uname)->value('id');
-            $user_count=DB::table('issue__books')->select('user_id')->where('user_id',$user_id)->count();
-            if($user_count<3)
-            {
-                if($avail>0)
-                {
-                    DB::table('books')->where('id',$book_id)->increment('is_available');
-                    DB::table('books')->where('id',$book_id)->decrement('issued_book');
-                    $issue_books->book_id=$book_id;
-                    $issue_books->user_id=$user_id;
-                    $issue_books->save();
-                }
-            }
-            else{
-                $books = DB::select("SELECT * from books where is_available>0");
-                return redirect('issuebook')->with(['books' => $books])->with('message',"You have already issued 3 Books.");
-            } 
-            $books = DB::select("SELECT * from books where is_available>0");
-            return view('issuebook', ['books' => $books]);
+            $book_id=$req->book_id;
+            $issue_books =new issue_book;$user_id=DB::table('users')->where('name',$uname)->value('id');
+            DB::delete("delete from issue__books where id=$issue_id");
+            DB::table('books')->where('id',$book_id)->increment('is_available');
+            DB::table('books')->where('id',$book_id)->decrement('issued_book');
+            $books=issue_book::where('user_id',$user_id)->with('book')->get();
+            return view('returnbook', ['books' => $books]);
         }
         else {
             $uname = $req->session()->get('uname');
             $user_id=DB::table('users')->where('name',$uname)->value('id');
-            $books = DB::table('issue__books')->select('*')->where('user_id',$user_id)->get();
-            // $books = issue_Book::with('book_id')->get();
-            echo $books->book_id;
-            // return view('returnbook', ['books' => $books]);
+            $books=issue_book::where('user_id',$user_id)->with('book')->get();
+            return view('returnbook', ['books' => $books]);
         }
     }
 }
