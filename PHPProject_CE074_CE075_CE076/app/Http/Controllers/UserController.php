@@ -19,6 +19,7 @@ use Session;
 
 class UserController extends Controller
 {
+    // Welcome Page
     function home(Request $req)
     {
         if($req->session()->get('uname')) {
@@ -28,21 +29,30 @@ class UserController extends Controller
         }
     }
 
+    // Login page for not superuser 
     function loginMember(Request $req)
     {
-        if($req->session()->get('uname')) {
-            return redirect('login_welcome');
-        } else {
-            $uname = $req->name;
-            $upassword =  $req->password;
-            $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
-            if ($c == 1){
-                $req->session()->put('uname',$uname);
+        if($req->isMethod('POST')) {
+            if($req->session()->get('uname')) {
                 return redirect('login_welcome');
+            } else {
+                $uname = $req->name;
+                $upassword =  $req->password;
+                $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
+                if ($c == 1){
+                    $req->session()->put('uname',$uname);
+                    return redirect('login_welcome');
+                }
+                else
+                {
+                    return redirect('mylogin')->with('message',"invalid username or password");
+                }
             }
-            else
-            {
-                return redirect('mylogin')->with('message',"invalid username or password");
+        } else {
+            if($req->session()->get('uname')) {
+                return redirect('login_welcome');
+            } else {
+                return view('mylogin');
             }
         }
     }
