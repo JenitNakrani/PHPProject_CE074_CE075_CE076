@@ -9,14 +9,43 @@ use App\Models\User;
 use App\Models\Book;
 use App\Models\admin;
 use App\Models\issue_Book;
+use Illuminate\Database\Query\Builder;
+
 use Auth;
 use Hash;
 use Crypt;
 use Session;
-use Illuminate\Database\Query\Builder;
+
 
 class UserController extends Controller
 {
+    function home(Request $req)
+    {
+        if($req->session()->get('uname')) {
+            return redirect('login_welcome');
+        } else {
+            return view('home');
+        }
+    }
+
+    function loginMember(Request $req)
+    {
+        if($req->session()->get('uname')) {
+            return redirect('login_welcome');
+        } else {
+            $uname = $req->name;
+            $upassword =  $req->password;
+            $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
+            if ($c == 1){
+                $req->session()->put('uname',$uname);
+                return redirect('login_welcome');
+            }
+            else
+            {
+                return redirect('mylogin')->with('message',"invalid username or password");
+            }
+        }
+    }
     
     function addMember(Request $req)
      {
@@ -54,37 +83,6 @@ class UserController extends Controller
         }
     }
 
-    function loginMember(Request $req)
-    {
-        $uname = $req->name;
-        $upassword =  $req->password;
-        $checkbox=$req->checkbox;
-        $super_name="admin";
-        $super_pass="admin";
-        error_log($checkbox);
-        if($checkbox != "superuser")
-        {
-            $c = DB::table('users')->select('name')->where('name',$uname)->where('password',$upassword)->count();
-            if ($c == 1){
-                $req->session()->put('uname',$uname);
-                return redirect('login_welcome');
-            }
-            else
-            {
-                return redirect('mylogin')->with('message',"invalid username or password");
-            }
-        }
-        // else{
-        //     if ($uname == $super_name and $upassword == $super_pass)
-        //     {  
-        //          $req->session()->put('superuser',TRUE);
-        //         return redirect('login_welcome')->with('message',"invalid username or password");
-        //     }
-        //         else
-        //         return redirect('mylogin')->with('message',"Invalid Username or Password of Superuser");
-        // }
-    }
-
     function logoutMember(Request $req)
     {
         session()->forget('superuser');
@@ -93,28 +91,20 @@ class UserController extends Controller
         session()->flush();
         return redirect('/')->with('message',"Successfully Logout..");
     }
+
     function adminLogin(Request $req)
     {
-        // if($req->isMethod('POST')) {
         $aname = $req->aname;
         $apassword =  $req->apassword;
         $req->session()->put('aname',$aname);
-            $c = DB::table('admins')->select('username')->where('username',$aname)->where('password',$apassword)->count();
-            if ($c == 1){
-                return redirect('admin_welcome');
-            }
-            else
-            {
-                return redirect('adminLogin')->with('message',"invalid username or password");
-            }
-        // }
-        // else
-        // {
-        //     return redirect('adminLogin');
-        // } 
+        $c = DB::table('admins')->select('username')->where('username',$aname)->where('password',$apassword)->count();
+        if ($c == 1){
+            return redirect('admin_welcome');
+        }
+        else
+        {
+            return redirect('adminLogin')->with('message',"invalid username or password");
+        }
     }
 }
-
-    
-
 ?>

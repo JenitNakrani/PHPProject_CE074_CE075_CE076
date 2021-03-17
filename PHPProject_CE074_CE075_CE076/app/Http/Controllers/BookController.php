@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\issue_Book;
+use Illuminate\Database\Query\Builder;
+
 use Auth;
 use Hash;
 use Crypt;
 use Session;
-use Illuminate\Database\Query\Builder;
 
 class BookController extends Controller
 {

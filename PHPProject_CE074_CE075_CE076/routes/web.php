@@ -24,13 +24,15 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/', function () {
-    return view('home');
+	return view('login_welcome');
 });
+
+Route::GET('/', [UserController::class,'home']);
 
 Route::view('myregister', 'myregister');
 Route::POST('register', [UserController::class,'addMember']);
 
-Route::view('mylogin', 'mylogin');
+Route::GET('mylogin', [UserController::class,'loginMember']);
 Route::POST('userlogin', [UserController::class,'loginMember']);
 Route::view('login_welcome', 'login_welcome');
 
