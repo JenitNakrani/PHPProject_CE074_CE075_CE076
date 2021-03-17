@@ -3,13 +3,8 @@
 <title>Welcome</title>
 
 @section('nav-left-links')
-<!-- @if(session()->has('superuser'))
-    <a href="{{ url('addbook') }}" class="btn btn-outline-success ms-2">Add book</a>
-    <a href="{{ url('removebook') }}" class="btn btn-outline-success ms-2">Remove book</a>
-@else -->
     <a href="{{ url('issuebook')}}" class="btn btn-outline-success ms-2">Issue book</a>  
     <a href="{{ url('returnbook')}}" class="btn btn-outline-success ms-2">Return book</a>
-<!-- @endif -->
 @endsection
 
 @section('nav-right-links')

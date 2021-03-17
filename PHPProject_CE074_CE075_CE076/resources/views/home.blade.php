@@ -22,12 +22,12 @@
 
 @section('mystyle')
 <style>
-                body{
-                        margin: 0;
-                        padding: 0;
-                        background-image:url('{{ asset('img/2.jpg') }}');
-                        background-repeat: no-repeat;
-                        background-size: cover;
-                }
+    body{
+            margin: 0;
+            padding: 0;
+            background-image:url('{{ asset('img/2.jpg') }}');
+            background-repeat: no-repeat;
+            background-size: cover;
+    }
 </style>
 @endsection

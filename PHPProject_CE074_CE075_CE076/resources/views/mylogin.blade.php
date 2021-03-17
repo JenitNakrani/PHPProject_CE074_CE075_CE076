@@ -26,5 +26,5 @@
         <label class="form-check-label">Superuser</label>
     </div> -->
     <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+</form>
 @endsection
