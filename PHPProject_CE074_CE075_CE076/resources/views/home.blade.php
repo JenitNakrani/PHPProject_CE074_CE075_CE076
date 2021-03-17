@@ -8,8 +8,10 @@
 
 <title>Home</title>
 @section('nav-right-links')
-    <a href="myregister/" class="btn btn-outline-success ms-2">Register</a>
-    <a href="mylogin/" class="btn btn-outline-success ms-2">Login</a>
+
+<a href="adminlogin/" class="btn btn-outline-success ms-2">Admin Login</a>
+    <a href="myregister/" class="btn btn-outline-success ms-2">User Signup</a>
+    <a href="mylogin/" class="btn btn-outline-success ms-2">User Login</a>
 @endsection
 
 @section('content')

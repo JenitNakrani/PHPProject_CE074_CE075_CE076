@@ -3,11 +3,9 @@
 <title>Remove book</title>
 
 @section('nav-right-links')
-@if(session()->has('superuser'))
     <a href="{{ url('addbook') }}" class="btn btn-outline-success ms-2">Add book</a>
     <a href="{{ url('removebook') }}" class="btn btn-outline-success ms-2">Remove book</a>
     <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>
-    @endif
 @endsection
 
 @section('content')
@@ -76,9 +74,6 @@
     @else
     <div class="container">
       <h1>No book in library
-      <!-- @if(session()->has('search'))
-        {{session()->get('search')}}
-	    @endif -->
       </h1>
     </div>
     @endif

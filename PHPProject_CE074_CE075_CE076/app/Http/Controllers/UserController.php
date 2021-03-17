@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Book;
+use App\Models\admin;
 use App\Models\issue_Book;
 use Auth;
 use Hash;
@@ -73,15 +74,15 @@ class UserController extends Controller
                 return redirect('mylogin')->with('message',"invalid username or password");
             }
         }
-        else{
-            if ($uname == $super_name and $upassword == $super_pass)
-            {  
-                 $req->session()->put('superuser',TRUE);
-                return redirect('login_welcome')->with('message',"invalid username or password");
-            }
-                else
-                return redirect('mylogin')->with('message',"Invalid Username or Password of Superuser");
-        }
+        // else{
+        //     if ($uname == $super_name and $upassword == $super_pass)
+        //     {  
+        //          $req->session()->put('superuser',TRUE);
+        //         return redirect('login_welcome')->with('message',"invalid username or password");
+        //     }
+        //         else
+        //         return redirect('mylogin')->with('message',"Invalid Username or Password of Superuser");
+        // }
     }
 
     function logoutMember(Request $req)
@@ -92,6 +93,28 @@ class UserController extends Controller
         session()->flush();
         return redirect('/')->with('message',"Successfully Logout..");
     }
+    function adminLogin(Request $req)
+    {
+        // if($req->isMethod('POST')) {
+        $aname = $req->aname;
+        $apassword =  $req->apassword;
+        $req->session()->put('aname',$aname);
+            $c = DB::table('admins')->select('username')->where('username',$aname)->where('password',$apassword)->count();
+            if ($c == 1){
+                return redirect('admin_welcome');
+            }
+            else
+            {
+                return redirect('adminLogin')->with('message',"invalid username or password");
+            }
+        // }
+        // else
+        // {
+        //     return redirect('adminLogin');
+        // } 
+    }
 }
+
+    
 
 ?>
