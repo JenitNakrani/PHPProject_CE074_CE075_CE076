@@ -57,6 +57,7 @@ class UserController extends Controller
         }
     }
     
+    // Register the user
     function addMember(Request $req)
      {
         $uname = $req->name;
@@ -93,6 +94,7 @@ class UserController extends Controller
         }
     }
 
+    // logout User
     function logoutMember(Request $req)
     {
         session()->forget('superuser');

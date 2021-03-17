@@ -18,6 +18,9 @@ use Session;
 class BookController extends Controller
 {
     function addBook(Request $req) {
+        if($req->session()->get('aname')) {
+
+        if($req->isMethod('POST')) {
         $book_name = $req->book_name;
         $author =  $req->author_name;
         $publish_year=$req->publish_year;
@@ -40,11 +43,16 @@ class BookController extends Controller
             DB::table('books')->where('book_name',$book_name)->where('author_name',$author)->where('publish_year',$publish_year)->increment('is_available');
             return redirect('addbook')->with('message',"Successfully Book added.");
         }
+        } else {
+            return view('addbook');
+        }
+        } else {
+            return redirect('/')->with('message',"You are not authorize.");
+        }
     }
 
-
-
     function removeBook(Request $req) {
+        if($req->session()->get('aname')) {
         if($req->isMethod('POST')) {
             $book_id = $req->id;
             $c = DB::table('books')->where('id',$book_id)->value('stock');
@@ -78,6 +86,9 @@ class BookController extends Controller
             else
                 $books=Book::where('publish_year','LIKE',"%{$search_query}%") -> get();
             return view('removebook', ['books' => $books]);
+        }
+        } else {
+            return redirect('/')->with('message',"You are not authorize.");
         }
     }
         

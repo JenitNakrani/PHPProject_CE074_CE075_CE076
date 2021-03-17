@@ -39,7 +39,7 @@ Route::view('login_welcome', 'login_welcome');
 Route::view('about/', 'about');
 Route::get('/logout',[UserController::class,'logoutMember']);
 
-Route::view('addbook','addbook');
+Route::GET('addbook',[BookController::class,'addBook']);
 Route::POST('addbook',[BookController::class,'addBook']);
 
 Route::GET('removebook',[BookController::class,'removeBook']);
