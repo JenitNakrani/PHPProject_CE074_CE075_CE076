@@ -93,6 +93,7 @@ class BookController extends Controller
     }
         
     function issueBook(Request $req) {
+        if($req->session()->get('uname')) {
         if($req->isMethod('POST')) {
             $book_id = $req->id;
             $uname=$req->session()->get('uname');
@@ -135,26 +136,32 @@ class BookController extends Controller
                 $books = DB::select("SELECT * from books where is_available>0");
             return view('issuebook', ['books' => $books]);
         }
+        } else {
+            return redirect('/')->with('message',"You are not authorize.");
+        }
     }
 
     function returnBook(Request $req) {
-        if($req->isMethod('POST')) {
-            
-            $issue_id = $req->id;
-            $uname=$req->session()->get('uname');
-            $book_id=$req->book_id;
-            $issue_books =new issue_book;$user_id=DB::table('users')->where('name',$uname)->value('id');
-            DB::delete("delete from issue__books where id=$issue_id");
-            DB::table('books')->where('id',$book_id)->increment('is_available');
-            DB::table('books')->where('id',$book_id)->decrement('issued_book');
-            $books=issue_book::where('user_id',$user_id)->with('book')->get();
-            return view('returnbook', ['books' => $books]);
-        }
-        else {
-            $uname = $req->session()->get('uname');
-            $user_id=DB::table('users')->where('name',$uname)->value('id');
-            $books=issue_book::where('user_id',$user_id)->with('book')->get();
-            return view('returnbook', ['books' => $books]);
+        if($req->session()->get('uname')) {
+            if($req->isMethod('POST')) {
+                $issue_id = $req->id;
+                $uname=$req->session()->get('uname');
+                $book_id=$req->book_id;
+                $issue_books =new issue_book;$user_id=DB::table('users')->where('name',$uname)->value('id');
+                DB::delete("delete from issue__books where id=$issue_id");
+                DB::table('books')->where('id',$book_id)->increment('is_available');
+                DB::table('books')->where('id',$book_id)->decrement('issued_book');
+                $books=issue_book::where('user_id',$user_id)->with('book')->get();
+                return view('returnbook', ['books' => $books]);
+            }
+            else {
+                $uname = $req->session()->get('uname');
+                $user_id=DB::table('users')->where('name',$uname)->value('id');
+                $books=issue_book::where('user_id',$user_id)->with('book')->get();
+                return view('returnbook', ['books' => $books]);
+            }
+        } else {
+            return redirect('/')->with('message',"You are not authorize.");
         }
     }
 }
