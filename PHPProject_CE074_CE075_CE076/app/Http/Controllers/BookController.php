@@ -184,6 +184,23 @@ class BookController extends Controller
             return redirect('/')->with('message',"You are not authorize.");
         }
     }
+
+    function profile(Request $req) 
+    {
+        if($req->session()->get('uname')) {
+            if($req->isMethod('POST')) {
+            }
+            else
+            {
+                $uname = $req->session()->get('uname');
+                $user = user::where('name',$uname)->get();
+                return view('profile', ['user'=> $user]);
+            }
+        }
+        else {
+            return redirect('/')->with('message',"You are not authorize.");
+        }
+    }
 }
 
 ?>

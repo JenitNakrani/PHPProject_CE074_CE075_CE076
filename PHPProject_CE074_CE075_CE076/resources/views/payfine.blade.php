@@ -3,12 +3,13 @@
 <title>Return Book</title>
 
 @section('nav-right-links')
-        <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>      
+        <a href="{{ url('/logout') }}" class="btn btn-outline-danger ms-2">Logout</a>    
 @endsection
 
 @section('nav-left-links')
   <a href="{{ url('issuebook') }}" class="btn btn-outline-success ms-2">Issue book</a>  
   <a href="{{ url('returnbook') }}" class="btn btn-outline-success ms-2">Return book</a>
+  <a href="{{ url('payfine')}}" class="btn btn-outline-success ms-2">Pay Fine</a>
 @endsection
 
 @section('content')
@@ -23,9 +24,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h1 class="text-uppercase">Library</h1>
-                        <div class="billed"><span class="font-weight-bold text-uppercase">Name:</span><span class="ml-1">   @if(session()->has('uname'))
-        {{session()->get('uname')}}
-    @endif</span></div>
+                        <div class="billed"><span class="font-weight-bold text-uppercase">Name:</span><span class="ml-1">   
+                        @if(session()->has('uname'))
+                            {{session()->get('uname')}}
+                        @endif</span></div>
                         <div class="billed"><span class="font-weight-bold text-uppercase">Date:</span><span class="ml-1">{{date('d-m-Y')}}</span></div>
 
                     </div>  
@@ -57,7 +59,7 @@
     									<tr>
     										<td> {{$book['book_id']}} </td> 
     										<td> {{$book['book']->book_name}} </td>
-    										<td> Not late {{$users['user']->id}}</td>
+    										<td> Not Late </td>
                                             <td>{{$fine}}<td>
                                             @php
                                                 $total+=$fine
@@ -85,7 +87,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="text-right mb-3"><button class="btn btn-danger btn-sm mr-5" type="button">Pay Now</button></div>
             </div>
         </div>
     </div>
