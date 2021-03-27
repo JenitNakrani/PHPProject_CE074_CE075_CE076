@@ -17,8 +17,8 @@
     <div class="alert alert-danger">{{session('message')}}</div>
 @endif
     @if(count($books) > 0)
-    <form action="{{ url ('returnbook') }}" method="POST">
-      @csrf
+    
+      
       <table class="table">
           <thead>
             <tr>
@@ -31,6 +31,8 @@
 
           <tbody>
              @foreach($books as $book)
+             <form action="{{ url ('returnbook') }}" method="POST">
+              @csrf
               <tr>
                  <td> {{$book['book']->book_name}} </td> 
                  <td> {{$book['book']->author_name}} </td>
@@ -39,10 +41,10 @@
                  <input type="hidden" name="book_id" value="{{$book['book']->id}}"/>
                  <td> <button type="submit" name="id" class="btn btn-outline-danger" value="{{ $book['id'] }}">Return</button> </td>
               </tr>
+              </form>
             @endforeach
           </tbody>
       </table>
-    </form>
     @else
     <div class="container">
       <h1>No Issued Books</h1>

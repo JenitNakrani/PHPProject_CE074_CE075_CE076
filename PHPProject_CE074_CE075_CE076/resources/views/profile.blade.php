@@ -16,53 +16,53 @@
 	<form action="" method="POST">
 		<h1>Profile</h1>
 <div class="container">
-    <div class="main-body">
-        <div class="row gutters-sm">
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Username</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="{{session()->get('uname')}}" readonly>
-                                
-                            </div>
+<div class="main-body">
+    <div class="row gutters-sm">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Username</h6>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">First name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" id="firstname" name="firstname" value="{{$user[0]->firstname}}" pattern="[A-Za-z]+" required readonly>
-                            </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" class="form-control" value="{{session()->get('uname')}}" readonly>
+                            
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Last name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" id="lastname" name="lastname" value="{{$user[0]->lastname}}" pattern="[A-Za-z]+" required readonly>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="email" class="form-control" id="email" name="email" value="{{$user[0]->email}}" required readonly>
-                            </div>
-                        </div>
-                        <hr>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">First name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" class="form-control" id="firstname" name="firstname" value="{{$user[0]->firstname}}" pattern="[A-Za-z]+" required readonly>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Last name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="text" class="form-control" id="lastname" name="lastname" value="{{$user[0]->lastname}}" pattern="[A-Za-z]+" required readonly>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input type="email" class="form-control" id="email" name="email" value="{{$user[0]->email}}" required readonly>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </form>
 @endsection
