@@ -103,36 +103,44 @@ class BookController extends Controller
             $avail = DB::table('books')->where('id',$book_id)->value('is_available');
             $user_id=DB::table('users')->where('name',$uname)->value('id');
             $user_count=DB::table('issue__books')->select('user_id')->where('user_id',$user_id)->count();
-            if($user_count<3)
+            if( (DB::table('issue__books')->select('book_id')->where('user_id',$user_id)->where('book_id',$book_id)->count()) > 0)
             {
-                if($avail>0)
-                {
-                    $issue_books->book_id=$book_id;
-                    $issue_books->user_id=$user_id;
-                    $issue_books->issued_date=Carbon::now()->addDays(10);
-                    $issue_books->save();
-                    DB::table('books')->where('id',$book_id)->decrement('is_available');
-                    DB::table('books')->where('id',$book_id)->increment('issued_book');
-                }
-            }
-            else{
                 $books = DB::select("SELECT * from books where is_available>0");
-                return redirect('issuebook')->with(['books' => $books])->with('message',"You have already issued 3 Books.");
-            } 
-            $books = DB::select("SELECT * from books where is_available>0");
-            return view('issuebook', ['books' => $books]);
+                return redirect('issuebook')->with(['books' => $books])->with('message',"it's book already taken by you.");
+            }
+            else
+            {
+                if($user_count<3)
+                {
+                    if($avail>0)
+                    {
+                        $issue_books->book_id=$book_id;
+                        $issue_books->user_id=$user_id;
+                        $issue_books->issued_date=date('Y-m-d');
+                        $issue_books->save();
+                        DB::table('books')->where('id',$book_id)->decrement('is_available');
+                        DB::table('books')->where('id',$book_id)->increment('issued_book');
+                    }
+                }
+                else{
+                    $books = DB::select("SELECT * from books where is_available>0");
+                    return redirect('issuebook')->with(['books' => $books])->with('message',"You have already issued 3 Books.");
+                } 
+                $books = DB::select("SELECT * from books where is_available>0");
+                return view('issuebook', ['books' => $books]);
+            }
         }
         else {
             $search_query=$req->input_query;
             $option=$req->option;
             if($option == "all") 
-                $books=Book::where('book_name', 'LIKE', "%{$search_query}%") ->orWhere('author_name', 'LIKE', "%{$search_query}%") -> orWhere('publish_year','LIKE',"%{$search_query}%") -> get();
+                $books=Book::where('book_name', 'LIKE', "%{$search_query}%") ->orWhere('author_name', 'LIKE', "%{$search_query}%") -> orWhere('publish_year','LIKE',"%{$search_query}%")->where('is_available','>',0) -> get();
             elseif($option == "book_name") 
-                $books=Book::where('book_name', 'LIKE', "%{$search_query}%")-> get();
+                $books=Book::where('book_name', 'LIKE', "%{$search_query}%")->where('is_available','>',0)-> get();
             elseif($option == "author_name") 
-                $books=Book::where('author_name', 'LIKE', "%{$search_query}%")->get();
+                $books=Book::where('author_name', 'LIKE', "%{$search_query}%")->where('is_available','>',0)->get();
             elseif($option == "publish_year")
-                $books=Book::where('publish_year','LIKE',"%{$search_query}%") -> get();
+                $books=Book::where('publish_year','LIKE',"%{$search_query}%")->where('is_available','>',0)-> get();
             else
                 $books = DB::select("SELECT * from books where is_available>0");
             return view('issuebook', ['books' => $books]);
