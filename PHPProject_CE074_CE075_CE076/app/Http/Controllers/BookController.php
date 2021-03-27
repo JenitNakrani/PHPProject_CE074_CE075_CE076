@@ -70,7 +70,7 @@ class BookController extends Controller
                 return redirect('removebook')->with('message',"You can't delete this Book Because this book is already given.");
             else{
                 DB::table('books')->where('id',$book_id)->decrement('stock');
-                DB::table('books')->where('id',$book_id)->decrement('is_available');        
+                DB::table('books')->where('id',$book_id)->decrement('is_available');
             }
             $books = DB::table('books')->get();
             return view('removebook', ['books' => $books]);
@@ -103,12 +103,10 @@ class BookController extends Controller
             $avail = DB::table('books')->where('id',$book_id)->value('is_available');
             $user_id=DB::table('users')->where('name',$uname)->value('id');
             $user_count=DB::table('issue__books')->select('user_id')->where('user_id',$user_id)->count();
-            if( (DB::table('issue__books')->select('book_id')->where('user_id',$user_id)->where('book_id',$book_id)->count()) > 0)
-            {
+            if( (DB::table('issue__books')->select('book_id')->where('user_id',$user_id)->where('book_id',$book_id)->count()) > 0) {
                 $books = DB::select("SELECT * from books where is_available>0");
                 return redirect('issuebook')->with(['books' => $books])->with('message',"it's book already taken by you.");
-            }
-            else
+            } else
             {
                 if($user_count<3)
                 {
@@ -157,11 +155,18 @@ class BookController extends Controller
                 $uname=$req->session()->get('uname');
                 $book_id=$req->book_id;
                 $issue_books =new issue_book;$user_id=DB::table('users')->where('name',$uname)->value('id');
+
+                if((DB::table('issue__books')->select('book_id')->where('user_id',$user_id)->where('book_id',$book_id)->count()) == 0)
+                {
+                    $books=issue_book::where('user_id',$user_id)->with('book')->get();
+                    return redirect('returnbook')->with(['books' => $books])->with('message',"it's book already returned.");
+                } else {
                 DB::delete("delete from issue__books where id=$issue_id");
                 DB::table('books')->where('id',$book_id)->increment('is_available');
                 DB::table('books')->where('id',$book_id)->decrement('issued_book');
                 $books=issue_book::where('user_id',$user_id)->with('book')->get();
                 return view('returnbook', ['books' => $books]);
+                }
             }
             else {
                 $uname = $req->session()->get('uname');

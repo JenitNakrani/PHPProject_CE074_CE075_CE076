@@ -14,7 +14,7 @@
 
 @section('content')
 @if(session('message'))
-    <div class="alert alert-success">{{session('message')}}</div>
+    <div class="alert alert-danger">{{session('message')}}</div>
 @endif
     @if(count($books) > 0)
     <form action="{{ url ('returnbook') }}" method="POST">
