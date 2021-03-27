@@ -176,7 +176,8 @@ class BookController extends Controller
                 $uname = $req->session()->get('uname');
                 $user_id=DB::table('users')->where('name',$uname)->value('id');
                 $books=issue_book::where('user_id',$user_id)->with('book')->get();
-                return view('payfine', ['books' => $books]);
+                $users=issue_book::where('user_id',$user_id)->with('user')->get();
+                return view('payfine', ['books' => $books,'users'=> $users]);
             }
         }
         else {

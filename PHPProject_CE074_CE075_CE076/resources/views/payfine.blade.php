@@ -27,7 +27,7 @@
         {{session()->get('uname')}}
     @endif</span></div>
                         <div class="billed"><span class="font-weight-bold text-uppercase">Date:</span><span class="ml-1">{{date('d-m-Y')}}</span></div>
-                        <div class="billed"><span class="font-weight-bold text-uppercase">Fine ID:</span><span class="ml-1">#1345345</span></div>
+
                     </div>  
                     <div class="col-md-6 text-right mt-3">
                         <h4 class="text-danger mb-0">Library Mangement</h4><span>library.com</span>
@@ -57,7 +57,7 @@
     									<tr>
     										<td> {{$book['book_id']}} </td> 
     										<td> {{$book['book']->book_name}} </td>
-    										<td> Not late </td>
+    										<td> Not late {{$users['user']->id}}</td>
                                             <td>{{$fine}}<td>
                                             @php
                                                 $total+=$fine

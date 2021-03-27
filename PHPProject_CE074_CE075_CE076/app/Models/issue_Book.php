@@ -14,4 +14,8 @@ class issue_Book extends Model
     {
         return $this->belongsTo('App\Models\Book','book_id');
     }
+    public function User()
+    {
+        return $this->belongsTo('App\Models\User','user_id');
+    }
 }
