@@ -18,7 +18,7 @@
 <div class="container">
 <div class="main-body">
     <div class="row gutters-sm">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">

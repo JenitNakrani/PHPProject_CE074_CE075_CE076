@@ -71,6 +71,7 @@ class BookController extends Controller
             else{
                 DB::table('books')->where('id',$book_id)->decrement('stock');
                 DB::table('books')->where('id',$book_id)->decrement('is_available');
+                return redirect('removebook')->with('message',"Sucessfully book is removed.");
             }
             $books = DB::table('books')->get();
             return view('removebook', ['books' => $books]);
@@ -79,13 +80,13 @@ class BookController extends Controller
             $option=$req->option;
             $req->session()->put('search',$search_query);
             if($option == "all") 
-                $books=Book::where('book_name', 'LIKE', "%{$search_query}%") ->orWhere('author_name', 'LIKE', "%{$search_query}%") -> orWhere('publish_year','LIKE',"%{$search_query}%") -> get();
+                $books=Book::where('book_name', 'LIKE', "%{$search_query}%") ->orWhere('author_name', 'LIKE', "%{$search_query}%") -> orWhere('publish_year','LIKE',"%{$search_query}%")->where('is_available','>',0) -> get();
             elseif($option == "book_name") 
-                $books=Book::where('book_name', 'LIKE', "%{$search_query}%")-> get();
+                $books=Book::where('book_name', 'LIKE', "%{$search_query}%")->where('is_available','>',0)-> get();
             elseif($option == "author_name") 
-                $books=Book::where('author_name', 'LIKE', "%{$search_query}%")->get();
+                $books=Book::where('author_name', 'LIKE', "%{$search_query}%")->where('is_available','>',0)->get();
             else
-                $books=Book::where('publish_year','LIKE',"%{$search_query}%") -> get();
+                $books=Book::where('publish_year','LIKE',"%{$search_query}%")->where('is_available','>',0) -> get();
             return view('removebook', ['books' => $books]);
         }
         } else {
@@ -118,6 +119,8 @@ class BookController extends Controller
                         $issue_books->save();
                         DB::table('books')->where('id',$book_id)->decrement('is_available');
                         DB::table('books')->where('id',$book_id)->increment('issued_book');
+                        $books = DB::select("SELECT * from books where is_available>0");
+                        return redirect('issuebook')->with(['books' => $books])->with('message',"Successfully book is issued.");
                     }
                 }
                 else{
@@ -165,7 +168,7 @@ class BookController extends Controller
                 DB::table('books')->where('id',$book_id)->increment('is_available');
                 DB::table('books')->where('id',$book_id)->decrement('issued_book');
                 $books=issue_book::where('user_id',$user_id)->with('book')->get();
-                return view('returnbook', ['books' => $books]);
+                return redirect('returnbook')->with(['books' => $books])->with('message',"Successfully book is returned.");
                 }
             }
             else {

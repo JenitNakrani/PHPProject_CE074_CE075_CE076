@@ -14,27 +14,27 @@
     @csrf
     <div class="mb-3">
         <label class="form-label">Username</label>
-        <input type="text" class="form-control" name="name">
+        <input type="text" class="form-control" name="name" required>
     </div>
     <div class="mb-3">
         <label class="form-label">First name</label>
-        <input type="text" class="form-control" name="firstname">
+        <input type="text" class="form-control" name="firstname" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Last name</label>
-        <input type="text" class="form-control" name="lastname">
+        <input type="text" class="form-control" name="lastname" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="email" class="form-control" name="email">
+        <input type="email" class="form-control" name="email" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control" name="password">
+        <input type="password" class="form-control" name="password" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Re-enter Password</label>
-        <input type="password" class="form-control" name="repassword">
+        <input type="password" class="form-control" name="repassword" required>
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
     </form>
