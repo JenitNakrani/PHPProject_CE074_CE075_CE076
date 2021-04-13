@@ -9,6 +9,7 @@
 @section('nav-left-links')
   <a href="{{ url('issuebook') }}" class="btn btn-outline-success ms-2">Issue book</a>  
   <a href="{{ url('returnbook') }}" class="btn btn-outline-success ms-2">Return book</a>
+  <a href="{{ url('payfine')}}" class="btn btn-outline-success ms-2">Pay Fine</a>
 @endsection
 
 @section('content')
@@ -24,7 +25,7 @@
               <td>Book Name</td>
               <td>Author Name</td>
               <td>Publish Year</td>
-              <td>issued date</td>
+              <td>Return date</td>
             </tr>
           </thead>
 
@@ -34,7 +35,7 @@
                  <td> {{$book['book']->book_name}} </td> 
                  <td> {{$book['book']->author_name}} </td>
                  <td> {{$book['book']->publish_year}}</td>
-                 <td>{{$book['issued_date']}}</td>
+                 <td>{{date('d-m-Y', strtotime($book['issued_date']))}}</td>
                  <input type="hidden" name="book_id" value="{{$book['book']->id}}"/>
                  <td> <button type="submit" name="id" class="btn btn-outline-danger" value="{{ $book['id'] }}">Return</button> </td>
               </tr>

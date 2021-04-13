@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Book;
 use App\Models\issue_Book;
 use Illuminate\Database\Query\Builder;
+use Carbon\Carbon;
 
 use Auth;
 use Hash;
@@ -88,7 +89,7 @@ class BookController extends Controller
             return view('removebook', ['books' => $books]);
         }
         } else {
-            return redirect('/')->with('message',"You are not authorize.");
+            return redirect('/')->with('message',"You are not authorize.")->with('');
         }
     }
         
@@ -108,7 +109,7 @@ class BookController extends Controller
                 {
                     $issue_books->book_id=$book_id;
                     $issue_books->user_id=$user_id;
-                    $issue_books->issued_date=date('Y-m-d');
+                    $issue_books->issued_date=Carbon::now()->addDays(10);
                     $issue_books->save();
                     DB::table('books')->where('id',$book_id)->decrement('is_available');
                     DB::table('books')->where('id',$book_id)->increment('issued_book');
@@ -161,6 +162,24 @@ class BookController extends Controller
                 return view('returnbook', ['books' => $books]);
             }
         } else {
+            return redirect('/')->with('message',"You are not authorize.");
+        }
+    }
+
+    function payFine(Request $req)
+    {
+        if($req->session()->get('uname')) {
+            if($req->isMethod('POST')) {
+            }
+            else
+            {
+                $uname = $req->session()->get('uname');
+                $user_id=DB::table('users')->where('name',$uname)->value('id');
+                $books=issue_book::where('user_id',$user_id)->with('book')->get();
+                return view('payfine', ['books' => $books]);
+            }
+        }
+        else {
             return redirect('/')->with('message',"You are not authorize.");
         }
     }

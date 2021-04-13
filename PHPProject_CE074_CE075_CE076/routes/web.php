@@ -54,3 +54,5 @@ Route::POST('returnbook',[BookController::class,'returnBook']);
 Route::view('adminlogin','adminlogin');
 Route::POST('adminlogin', [UserController::class,'adminLogin']);
 Route::view('admin_welcome', 'admin_welcome');
+
+Route::GET('payfine',[BookController::class,'payfine']);
