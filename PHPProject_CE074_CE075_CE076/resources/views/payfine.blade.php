@@ -56,7 +56,7 @@
                                      @php
                                        $fine=0
                                      @endphp                                    
-                                    @if(round((time() - strtotime($book['issued_date'])) / (3600*24))<=0)
+                                    @if(round((time() - strtotime($book['issued_date'])) / (3600*24))-20<=0)
                                     	<tr>
     										<td> {{$book['book_id']}} </td> 
     										<td> {{$book['book']->book_name}} </td>
@@ -75,8 +75,10 @@
                                              @php
                                                 $total+=10
                                             @endphp
+
     									</tr>
                                     @endif
+                                
                                 @endforeach
                               <tr>
                                     <td></td>
